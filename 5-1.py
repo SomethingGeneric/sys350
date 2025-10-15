@@ -1,7 +1,12 @@
+# SYS 350 w/ Ryan Gillen
+# Milestone 5.1 Automation w/ PyVMomi
+# Matt C
+
 from getpass import getpass
 
 from service_instance import connect, args
 from pyVmomi import vim
+
 
 def get_vms(service_instance, vm_name=None):
     """
@@ -11,7 +16,9 @@ def get_vms(service_instance, vm_name=None):
     container = content.rootFolder
     view_type = [vim.VirtualMachine]
     recursive = True
-    container_view = content.viewManager.CreateContainerView(container, view_type, recursive)
+    container_view = content.viewManager.CreateContainerView(
+        container, view_type, recursive
+    )
 
     vms = []
     for vm in container_view.view:
@@ -19,6 +26,7 @@ def get_vms(service_instance, vm_name=None):
             vms.append(vm)
     container_view.Destroy()
     return vms
+
 
 user = open(".login").read().strip()
 hostname = open(".hostname").read().strip()
@@ -66,4 +74,3 @@ for vm in vms:
         print(f"IP Address: {addr}")
 
     # print(str(config))
-    

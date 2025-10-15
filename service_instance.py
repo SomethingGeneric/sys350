@@ -9,6 +9,7 @@ Modified from: https://github.com/vmware/pyvmomi-community-samples
 import atexit
 from pyVim.connect import SmartConnect, Disconnect
 
+
 # I had to define this, as I did not see where it was defined in the samples repo
 class args:
     def __init__(self, host, user, password, port, nocertval=True):
@@ -17,7 +18,6 @@ class args:
         self.password = password
         self.port = port
         self.disable_ssl_verification = nocertval
-
 
 
 def connect(args):
@@ -32,16 +32,17 @@ def connect(args):
     # form a connection...
     try:
         if args.disable_ssl_verification:
-            service_instance = SmartConnect(host=args.host,
-                                            user=args.user,
-                                            pwd=args.password,
-                                            port=args.port,
-                                            disableSslCertValidation=True)
+            service_instance = SmartConnect(
+                host=args.host,
+                user=args.user,
+                pwd=args.password,
+                port=args.port,
+                disableSslCertValidation=True,
+            )
         else:
-            service_instance = SmartConnect(host=args.host,
-                                            user=args.user,
-                                            pwd=args.password,
-                                            port=args.port)
+            service_instance = SmartConnect(
+                host=args.host, user=args.user, pwd=args.password, port=args.port
+            )
 
         # doing this means you don't need to remember to disconnect your script/objects
         atexit.register(Disconnect, service_instance)
